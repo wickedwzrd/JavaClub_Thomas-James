@@ -11,53 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author thomas
+ * @author milnejam
  */
 public class MainPage extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MainPage</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MainPage at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -70,7 +30,29 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // get the session *if* it exists.
+        HttpSession session = request.getSession(false);
+
+        String body;
+
+        if (session != null) {
+
+            String user = (String) session.getAttribute("user");
+            if (user != null) {
+                body = "<h3>Hello " + user + ", Login successful to "
+                        + "Java Club. </h3>\n";
+            } else {
+                body = "<h3>User not in session.</h3>\n";
+            }
+        } else {
+            body = "<h3>Session not set up.</h3>\n";
+        }
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        printHeader(out, "Login", "");
+        out.println(body);
+        printFooter(out);
     }
 
     /**
@@ -83,4 +65,33 @@ public class MainPage extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * Helper method to print out the header HTML
+     *
+     * @param out the PrintWriter to print out to
+     * @param title the title of the page
+     * @param css any css that should be added
+     */
+    private void printHeader(PrintWriter out, String title, String css) {
+        String header = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "<head>\n"
+                + "<meta charset=\"utf-8\">\n"
+                + "<title>"
+                + title
+                + "</title>\n"
+                + css
+                + "</head>\n"
+                + "<body>\n";
+        out.println(header);
+    }
+
+    /**
+     * Helper method to print out the footer HTML
+     *
+     * @param out the PrintWriter to print out to
+     */
+    private void printFooter(PrintWriter out) {
+        out.println("\n</body>\n</html>\n");
+    }
 }

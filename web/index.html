@@ -1,19 +1,30 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
-        <title>Login Example</title>
+        <title>Java Club Home Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div>
-            <!-- simple HTML login form -->
-            <form action='LoginServlet.do' method='post'><br>
-                User: <input type='text' name='user'><br>
-                Password: <input type='password' name='pass'><br><br>
-                <input type='submit' value='Login'>
+            <center><h1>Java Club Home</h1></center>
+        </div>
+        <div>
+            <h3>Please login to Java Club.</h3>
+            <form action="Login.do" method="post">
+                Username: <input type="text" name="user">
+                <br>
+                Password: <input type="password" name="pass">
+                <br>
+                <input type="submit" value="Login">
+                <br>
+                Not Registered yet? <a href="register.html">Sign up here</a>
             </form>
-
         </div>
     </body>
 </html>

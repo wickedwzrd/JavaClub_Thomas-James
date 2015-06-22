@@ -7,57 +7,18 @@ package javaclub;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author thomas
+ * @author milnejam
  */
 public class Login extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -70,7 +31,33 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+
+        // validate the user and password. Hard coded for now
+        if (user.equals("ejd") && pass.equals("1234")) {
+            // create a new session and set the "user" attribute
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+
+            // send the request to the welcome servlet
+            RequestDispatcher rd = request.getRequestDispatcher("MainPage.do");
+            rd.forward(request, response);
+            return; // get out; we're done
+        }
+        // if we made it here. the credentials didn't match up.  
+        // re-generate the login page
+        String body = "You entered wrong user name or password.";
+
+        String css = "<style> .red { color:#f00; } </style>";
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        printHeader(out, "Login", "");
+        out.println(body);
+        printFooter(out);
+
     }
 
     /**
@@ -82,5 +69,35 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    /**
+     * Helper method to print out the header HTML
+     *
+     * @param out the PrintWriter to print out to
+     * @param title the title of the page
+     * @param css any css that should be added
+     */
+    private void printHeader(PrintWriter out, String title, String css) {
+        String header = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "<head>\n"
+                + "<meta charset=\"utf-8\">\n"
+                + "<title>"
+                + title
+                + "</title>\n"
+                + css
+                + "</head>\n"
+                + "<body>\n";
+        out.println(header);
+    }
+
+    /**
+     * Helper method to print out the footer HTML
+     *
+     * @param out the PrintWriter to print out to
+     */
+    private void printFooter(PrintWriter out) {
+        out.println("\n</body>\n</html>\n");
+    }
 
 }

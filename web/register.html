@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
-        <title>Registration Form</title>
+        <title>Java Club Registration Form</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div>
+            <h1>Java Club Registration Form</h1>
+        </div>
+        <div>
+            Please fill out the form below...
+            <br><br>
+            <form action="Signup.do" method="post">
+                Choose your ID: <input type="text" name="user">
+                <br><br>
+                Choose your Password: <input type="password" name="pwd">
+                <br><br>
+                Re-Enter your password: <input type="password" name="pwd">
+                <br><br>
+                Enter your first name: <input type="text" name="firstName">
+                <br><br>
+                Enter your last name: <input type="text" name="lasName">
+                <br><br>
+                Enter your email address: <input type="text" name="email">
+                <br><br>
+                <input type="submit" value="Signup">
+                <br>
+            </form>
+        </div>
     </body>
 </html>

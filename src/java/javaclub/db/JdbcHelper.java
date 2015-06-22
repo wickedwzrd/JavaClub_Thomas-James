@@ -4,6 +4,7 @@ Description: This class is used to establish a connection to the database.
 */
 
 package javaclub.db;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
