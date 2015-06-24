@@ -39,8 +39,7 @@ public class MainPage extends HttpServlet {
 
             String user = (String) session.getAttribute("user");
             if (user != null) {
-                body = "<h3>Hello " + user + ", Login successful to "
-                        + "Java Club. </h3>\n";
+                body = "<h1>Hi " + request.getParameter("user") + ". Loged in succefully to JavaClub</h1> ";
             } else {
                 body = "<h3>User not in session.</h3>\n";
             }

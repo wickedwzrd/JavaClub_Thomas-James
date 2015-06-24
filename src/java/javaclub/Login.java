@@ -7,6 +7,10 @@ package javaclub;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javaclub.db.JdbcHelper;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,21 +35,36 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<Object> params = new ArrayList<>();
+        JdbcHelper helper = new JdbcHelper();
         
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        String sql = "select id, password from User where id=? and password=?";
+        String sql = "select id, password from User where id = ? and password = ?";
+        
+        try {
+            params.add(user);
+            params.add(pass);
+            ResultSet rs = helper.query(sql, params);
 
-        // validate the user and password. Hard coded for now
-        if (user.equals("ejd") && pass.equals("1234")) {
-            // create a new session and set the "user" attribute
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", user);
 
-            // send the request to the welcome servlet
-            RequestDispatcher rd = request.getRequestDispatcher("MainPage.do");
-            rd.forward(request, response);
-            return; // get out; we're done
+            while (rs.next()) {
+                
+            }
+            
+            // validate the user and password. Hard coded for now
+            if (user.equals("ejd") && pass.equals("1234")) {
+                // create a new session and set the "user" attribute
+                HttpSession session = request.getSession(true);
+                session.setAttribute("user", user);
+
+                // send the request to the welcome servlet
+                RequestDispatcher rd = request.getRequestDispatcher("MainPage.do");
+                rd.forward(request, response);
+                return; // get out; we're done
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
         // if we made it here. the credentials didn't match up.  
         // re-generate the login page
