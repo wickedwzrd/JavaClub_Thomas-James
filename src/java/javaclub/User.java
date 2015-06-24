@@ -22,6 +22,7 @@ public class User {
     }
     
     public void setId(String id){
+        this.id = id;
     }
 
     /**
@@ -79,12 +80,14 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    
     // constructor method
-    public User(String id, String password, String firstName, String lastName, String email){
-        this.id = id;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User(String id, String password, String firstName, String lastName, 
+            String email) {
+        setId(id);
+        setPassword(password);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
     }
 }

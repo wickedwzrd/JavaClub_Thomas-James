@@ -11,17 +11,42 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javaclub.db.UserDb;
 
 /**
  *
  * @author milnejam
  */
 public class Signup extends HttpServlet {
+    UserDb db = new UserDb();
+    User u;
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String user = request.getParameter("user");
+        String passwd = request.getParameter("pwd");
+        String passwd1 = request.getParameter("pwd_conf");
+        String fName = request.getParameter("firstName");
+        String lName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        
+        PrintWriter out = response.getWriter();
+        printHeader(out, "Signup", "");
+        if (!passwd.equals(passwd1)) {
+            out.println("<p>Passwords do not match!</p>");
+        } else {
+            u = new User(user, passwd, fName, lName, email);
+            
+            if (u.getId().equals(db.getUser(user))) {
+                out.println("<p>User with id " + user +" already exsists</p>");
+            } else {
+                db.addUser(u);
+                out.println("<p>Signed up succesfully. Thank you for joining JavaClub</p>");
+                out.println("<br><p><a href=\"MainPage.do\">Go to Home Page</a</p>");
+            }
+        }
+        printFooter(out);
     }
 
     /**

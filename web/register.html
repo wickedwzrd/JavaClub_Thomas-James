@@ -17,18 +17,18 @@ and open the template in the editor.
         <div>
             Please fill out the form below...
             <br><br>
-            <form action="Signup.do" method="post">
-                Choose your ID: <input type="text" name="user">
+            <form action="MainPage.do" method="post">
+                Choose your ID: <input type="text" name="user" required>
                 <br><br>
-                Choose your Password: <input type="password" name="pwd">
+                Choose your Password: <input type="password" name="pwd" required>
                 <br><br>
-                Re-Enter your password: <input type="password" name="pwd">
+                Re-Enter your password: <input type="password" name="pwd_conf" required>
                 <br><br>
-                Enter your first name: <input type="text" name="firstName">
+                Enter your first name: <input type="text" name="firstName" required>
                 <br><br>
-                Enter your last name: <input type="text" name="lasName">
+                Enter your last name: <input type="text" name="lastName" required>
                 <br><br>
-                Enter your email address: <input type="text" name="email">
+                Enter your email address: <input type="text" name="email" required>
                 <br><br>
                 <input type="submit" value="Signup">
                 <br>
