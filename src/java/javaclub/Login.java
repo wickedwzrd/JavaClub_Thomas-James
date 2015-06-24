@@ -71,7 +71,7 @@ public class Login extends HttpServlet {
         }
         // if we made it here. the credentials didn't match up.  
         // re-generate the login page
-        String body = "FUCK YOU";
+        String body = "Wrong username or passowrd";
 
         String css = "<style> .red { color:#f00; } </style>";
 
