@@ -31,9 +31,10 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
+        
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
+        String sql = "select id, password from User where id=? and password=?";
 
         // validate the user and password. Hard coded for now
         if (user.equals("ejd") && pass.equals("1234")) {

@@ -17,60 +17,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author milnejam
  */
 public class Signup extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Signup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Signup at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**
@@ -83,4 +34,26 @@ public class Signup extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void printHeader(PrintWriter out, String title, String css) {
+        String header = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "<head>\n"
+                + "<meta charset=\"utf-8\">\n"
+                + "<title>"
+                + title
+                + "</title>\n"
+                + css
+                + "</head>\n"
+                + "<body>\n";
+        out.println(header);
+    }
+
+    /**
+     * Helper method to print out the footer HTML
+     *
+     * @param out the PrintWriter to print out to
+     */
+    private void printFooter(PrintWriter out) {
+        out.println("\n</body>\n</html>\n");
+    }
 }
