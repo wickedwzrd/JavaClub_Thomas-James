@@ -40,30 +40,38 @@ public class Login extends HttpServlet {
         
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        String sql = "select id, password from User where id = ? and password = ?";
+        String sql = "select id, password from User where id = ? and password = ?;";
+        String u, p;
+        
+        boolean connected = helper.connect("jdbc:mysql://localhost/test", "root", "");
         
         try {
             params.add(user);
             params.add(pass);
             ResultSet rs = helper.query(sql, params);
-
-            // validate the user and password. Hard coded for now
-            if (user.equals(rs.getString("id")) && pass.equals(rs.getString("password"))) {
+            
+            while (rs.next()) {
+                u = rs.getString("id");
+                p = rs.getString("password");
+            
+            if (user.equals(u) && pass.equals(p)) {
                 // create a new session and set the "user" attribute
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user", user);
-
+                
+                request.setAttribute("connected", connected);
                 // send the request to the welcome servlet
                 RequestDispatcher rd = request.getRequestDispatcher("MainPage.do");
                 rd.forward(request, response);
                 return; // get out; we're done
+            }
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         // if we made it here. the credentials didn't match up.  
         // re-generate the login page
-        String body = "You entered wrong user name or password.";
+        String body = "FUCK YOU";
 
         String css = "<style> .red { color:#f00; } </style>";
 
