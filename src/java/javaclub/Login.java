@@ -47,13 +47,8 @@ public class Login extends HttpServlet {
             params.add(pass);
             ResultSet rs = helper.query(sql, params);
 
-
-            while (rs.next()) {
-                
-            }
-            
             // validate the user and password. Hard coded for now
-            if (user.equals("ejd") && pass.equals("1234")) {
+            if (user.equals(rs.getString("id")) && pass.equals(rs.getString("password"))) {
                 // create a new session and set the "user" attribute
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user", user);
