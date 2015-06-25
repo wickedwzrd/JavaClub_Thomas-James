@@ -1,7 +1,6 @@
 /*
-Name: Thomas Nevers/991 364 850
-Description: This class is used to establish a connection to the database.
-*/
+ * Name: Thomas Nevers/991 364 850
+ */
 
 package javaclub.db;
 
@@ -12,13 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * a helper class to interact with database using the JDBC API
- *
- * @author Song Ho Ahn
- * @author Paul Bonenfant
- *
- */
 public class JdbcHelper {
 
     // to store the connection

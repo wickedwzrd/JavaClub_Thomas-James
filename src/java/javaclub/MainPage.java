@@ -1,24 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Names: Thomas Nevers/James Milne
  */
 package javaclub;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javaclub.db.JdbcHelper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author milnejam
- */
 public class MainPage extends HttpServlet {
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -30,28 +27,45 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<Object> params = new ArrayList<>();
+        JdbcHelper helper = new JdbcHelper();
+        
+        String sql = "select firstName, lastName from User where id = ?;";
+        
+        boolean connected = helper.connect("jdbc:mysql://localhost/dev", "root", "");
         // get the session *if* it exists.
         HttpSession session = request.getSession(false);
 
-        String body;
+        String body = "";
+        
+        try {
 
-        if (session != null) {
-
-            String user = (String) session.getAttribute("user");
-            if (user != null) {
-                body = "<h1>Hi " + request.getParameter("user") + ". Loged in succefully to JavaClub</h1> ";
+            if (session != null) {
+                String user = (String) session.getAttribute("user");
+                params.add(user);
+                ResultSet rs = helper.query(sql, params);
+                
+                while (rs.next()) {
+                    if (user != null) {
+                        body = "<h1>Hi " + request.getParameter("user") + ". Loged in succefully to JavaClub</h1> ";
+                        body += "<p>Your name is " + rs.getString("firstName") + " " + rs.getString("lastName") + ".</p>";
+                        body += "<br><a href=\"Logout.do\">Logout</a>";
+                    } else {
+                        body = "<h3>User not in session.</h3>\n";
+                    }
+                }
             } else {
-                body = "<h3>User not in session.</h3>\n";
+                body = "<h3>Session not set up.</h3>\n";
             }
-        } else {
-            body = "<h3>Session not set up.</h3>\n";
-        }
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        printHeader(out, "Login", "");
-        out.println(body);
-        printFooter(out);
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            printHeader(out, "Login", "");
+            out.println(body);
+            printFooter(out);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     /**

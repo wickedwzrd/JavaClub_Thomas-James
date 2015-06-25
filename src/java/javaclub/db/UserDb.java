@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Names: Thomas Nevers/James Milne
  */
 package javaclub.db;
 
@@ -10,16 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javaclub.User;
 
-/**
- *
- * @author thomas
- */
 public class UserDb {
     JdbcHelper helper = new JdbcHelper();
     ArrayList<Object> params = new ArrayList<>();
     protected String sql;
     boolean connected = 
-            helper.connect("jdbc:mysql://localhost/test", "root", "");
+            helper.connect("jdbc:mysql://localhost/dev", "root", "");
     
     
     public void addUser(User user) {
