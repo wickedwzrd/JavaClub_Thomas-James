@@ -13,7 +13,7 @@ public class UserDb {
     ArrayList<Object> params = new ArrayList<>();
     protected String sql;
     boolean connected = 
-            helper.connect("jdbc:mysql://localhost/test", "root", "");
+            helper.connect("jdbc:mysql://localhost/dev", "root", "");
     
     
     public void addUser(User user) {

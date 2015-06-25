@@ -32,7 +32,7 @@ public class MainPage extends HttpServlet {
         
         String sql = "select firstName, lastName from User where id = ?;";
         
-        boolean connected = helper.connect("jdbc:mysql://localhost/test", "root", "");
+        boolean connected = helper.connect("jdbc:mysql://localhost/dev", "root", "");
         // get the session *if* it exists.
         HttpSession session = request.getSession(false);
 

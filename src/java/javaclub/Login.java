@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
         String pass = request.getParameter("pass");
         String sql = "select id, password from User where id = ? and password = ?;";
         
-        boolean connected = helper.connect("jdbc:mysql://localhost/test", "root", "");
+        boolean connected = helper.connect("jdbc:mysql://localhost/dev", "root", "");
         
         try {
             params.add(user);
