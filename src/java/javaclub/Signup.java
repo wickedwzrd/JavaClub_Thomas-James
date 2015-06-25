@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Names: Thomas Nevers/James Milne
  */
 package javaclub;
 
@@ -13,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javaclub.db.UserDb;
 
-/**
- *
- * @author milnejam
- */
 public class Signup extends HttpServlet {
     UserDb db = new UserDb();
     User u;
@@ -43,7 +37,7 @@ public class Signup extends HttpServlet {
             } else {
                 db.addUser(u);
                 out.println("<p>Signed up succesfully. Thank you for joining JavaClub</p>");
-                out.println("<br><p><a href=\"MainPage.do\">Go to Home Page</a</p>");
+                out.println("<br><p><a href=\"index.html\">Go to Home Page</a</p>");
             }
         }
         printFooter(out);
